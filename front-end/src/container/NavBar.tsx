@@ -1,16 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NavPoints from "../components/NavPoints";
 import Button from "../components/Button";
-import { FiMenu, FiX } from "react-icons/fi"; // for the menu icon
+import { FiMenu, FiX } from "react-icons/fi";
+import TranslationButton from "../components/TranslationButton";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isDarkBg, setIsDarkBg] = useState(true);
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const heroHeight = 700;
+      setIsDarkBg(window.scrollY < heroHeight);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <nav className="fixed w-full z-50 backdrop-blur-md shadow-sm">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center text-white font-semibold">
+    <nav
+      className={`fixed w-full z-50 backdrop-blur-md shadow-sm transition-colors duration-300 ${
+        isDarkBg ? "text-white bg-transparent" : "text-black bg-white/90"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center font-semibold">
         {/* Left - Logo and Title */}
         <div className="flex items-center gap-3">
           <img
@@ -27,12 +43,14 @@ const NavBar = () => {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-6">
-          <NavPoints name="Home" id="home" />
-          <NavPoints name="About Us" id="aboutus" />
-          <NavPoints name="Services" id="services" />
-          <NavPoints name="Contact" id="contact" />
+          <NavPoints name="Home" id="home" dark={isDarkBg} />
+          <NavPoints name="About Us" id="aboutus" dark={isDarkBg} />
+          <NavPoints name="Services" id="services" dark={isDarkBg} />
+          <NavPoints name="Contact" id="contact" dark={isDarkBg} />
           <Button name="Register" />
         </div>
+
+        <TranslationButton dark={isDarkBg} />
 
         {/* Mobile Menu Button */}
         <div className="md:hidden">
@@ -45,8 +63,11 @@ const NavBar = () => {
       {/* Mobile Dropdown */}
       {isOpen && (
         <div
-          className="md:hidden flex flex-col items-center space-y-4 pb-6 text-white font-medium"
-          style={{ backgroundColor: "rgba(31, 45, 58, 0.95)" }}
+          className={`md:hidden flex flex-col items-center space-y-4 pb-6 font-medium transition-colors duration-300 ${
+            isDarkBg
+              ? "text-white bg-[rgba(31,45,58,0.95)]"
+              : "text-black bg-white/95"
+          }`}
         >
           <NavPoints name="Home" id="home" />
           <NavPoints name="About Us" id="aboutus" />

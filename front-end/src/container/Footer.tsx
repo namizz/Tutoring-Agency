@@ -5,11 +5,13 @@ import {
   FaInstagram,
   FaLinkedinIn,
 } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 const Footer = () => {
+  const { t } = useTranslation();
+
   return (
-    <footer className="bg-[#1F2D3A] text-white py-10 px-6 ">
-      {/* Social Media */}
+    <footer className="bg-[#1F2D3A] text-white py-10 px-6">
       <div className="flex justify-center gap-6 mb-8">
         <a
           href="https://facebook.com"
@@ -45,9 +47,8 @@ const Footer = () => {
         </a>
       </div>
 
-      {/* Logo and Company Name */}
       <hr className="max-w-3xl mx-auto text-gray-500" />
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-3  pt-6">
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-6">
         <img
           src="/33 logo.jpg"
           alt="Logo"
@@ -55,8 +56,8 @@ const Footer = () => {
           height={45}
           className="rounded-full border-2 border-gray-400"
         />
-        <h2 className="max-w-xs text-lg sm:text-xl font-semibold text-white text-center ">
-          33 International Home & Online Tutoring Agency
+        <h2 className="max-w-xs text-lg sm:text-xl font-semibold text-white text-center">
+          {t("footer.title")}
         </h2>
       </div>
     </footer>

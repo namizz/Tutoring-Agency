@@ -1,45 +1,54 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import ServiceComponent from "../components/ServiceComponent";
 import { FaSchoolLock, FaLaptopCode, FaPlane } from "react-icons/fa6";
 import { SiDuolingo, SiTestin } from "react-icons/si";
 import { RiVipFill } from "react-icons/ri";
 
-const services = [
-  {
-    title: "General Tutor",
-    description: "Kg- university ሁለገብ የጥናት አገልግሎት",
-    icon: <FaSchoolLock className="text-4xl text-yellow-500" />,
-  },
-  {
-    title: "GAT and UAT",
-    description: "GAT and UAT ዝግጅቶች",
-    icon: <SiTestin className="text-4xl text-blue-500" />,
-  },
-  {
-    title: "SAT and Duolingo",
-    description: "SAT and Duolingo ዝግጅቶች",
-    icon: (
-      <SiDuolingo className="text-4xl text-green-500 bg-yellow-100 rounded-xl" />
-    ),
-  },
-  {
-    title: "VIP Tutor",
-    description: "የ VIP መምህራን ና የVIP አገልግሎቶችን አዘጋጅተናል",
-    icon: <RiVipFill className="text-4xl text-purple-500" />,
-  },
-  {
-    title: "VISA",
-    description: "የ ውጪ ትምህርት እድሎችን ማመቻቸት",
-    icon: <FaPlane className="text-4xl text-red-500 font-bold" />,
-  },
-];
-
 const Service = () => {
+  const { t } = useTranslation();
+
+  const services = [
+    {
+      title: t("service.generalTutor.title"),
+      description: t("service.generalTutor.desc"),
+      icon: <FaSchoolLock className="text-4xl text-yellow-500" />,
+    },
+    {
+      title: t("service.gatUat.title"),
+      description: t("service.gatUat.desc"),
+      icon: <SiTestin className="text-4xl text-blue-500" />,
+    },
+    {
+      title: t("service.satDuolingo.title"),
+      description: t("service.satDuolingo.desc"),
+      icon: (
+        <SiDuolingo className="text-4xl text-green-500 bg-yellow-100 rounded-xl" />
+      ),
+    },
+    {
+      title: t("service.vipTutor.title"),
+      description: t("service.vipTutor.desc"),
+      icon: <RiVipFill className="text-4xl text-purple-500" />,
+    },
+    {
+      title: t("service.visa.title"),
+      description: t("service.visa.desc"),
+      icon: <FaPlane className="text-4xl text-red-500 font-bold" />,
+    },
+  ];
+
   return (
-    <section className="py-16 px-6 bg-gray-50">
-      <div className="max-w-7xl mx-auto flex flex-col items-center gap-8">
-        <h1 className="text-3xl font-bold text-center mb-12">Our Services</h1>
-        <div className="flex flex-wrap justify-center gap-8 w-full">
+    <section className="py-20 px-8 bg-gray-50">
+      <div className="max-w-7xl mx-auto text-center">
+        <h1 className="text-4xl font-bold text-[#1F2D3A] mb-10">
+          {t("service.title")}
+        </h1>
+        <p className="text-gray-600 mb-12 max-w-2xl mx-auto">
+          {t("service.subtitle")}
+        </p>
+
+        <div className="flex flex-wrap justify-center gap-8">
           {services.map((service, index) => (
             <ServiceComponent
               key={index}

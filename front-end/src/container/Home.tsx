@@ -1,29 +1,31 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const Home = () => {
+  const { t } = useTranslation();
+
   return (
     <section
       id="home"
-      className="relative bg-[#1F2D3A] text-white  flex items-center overflow-hidden"
+      className="relative bg-[#1F2D3A] text-white flex items-center overflow-hidden"
     >
       {/* Background Image */}
       <div className="absolute inset-0 bg-[url('https://i.pinimg.com/1200x/13/e6/6d/13e66df5a2bc72f0353bf9e24bd55d38.jpg')] bg-cover bg-center opacity-40"></div>
 
       {/* Color Overlay */}
-      <div className="absolute inset-0 bg-[#1F2D3A] opacity-90"></div>
+      <div className="absolute inset-0 bg-[#1F2D3A] opacity-60"></div>
 
       {/* Main Content */}
-      <div className="relative z-10 max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-40 px-8 md:px-20 py-20 md:py-32">
+      <div className="relative z-10 max-w-8xl mx-auto flex flex-col md:flex-row justify-between items-center gap-40 px-8 md:px-20 py-20 md:py-32">
         {/* Left Text Section */}
-        <div className="max-w-xl space-y-6 text-center md:text-left">
+        <div className="max-w-2xl space-y-6 text-center md:text-left">
           <h1 className="text-3xl md:text-5xl font-extrabold leading-snug">
-            የልጆዎት የዕውቀት ልቀት ና የጉብዝና ደረጃ አላረካዎትም?
+            {t("home.title")}
           </h1>
           <p className="text-lg md:text-xl leading-relaxed text-gray-200">
-            እንኳን ለ 2018 የ ትምህርት ዘመን በሰላም አደረሳችሁ / አደረሰን አያልን። የብዙ ዓመት ልምድን ካካበቱ
-            የከፍተኛ ትምህርት ተቋማት እስከ ብቃት ካላቸው የከፍተኛ ትምህርት ተማሪዎች የተዋቀረው
-            <span className="font-bold text-red-400"> 33 International </span>
-            ከመፍትሄ ጋር ብቅ ብሏል።
+            {t("home.description")}{" "}
+            <span className="font-bold text-red-400">33 International</span>{" "}
+            {t("home.continuation")}
           </p>
         </div>
 
@@ -32,7 +34,7 @@ const Home = () => {
           <img
             src="https://i.pinimg.com/736x/87/ba/b3/87bab35f15bb6993d7d0f68f80809ea2.jpg"
             alt="Albert Einstein"
-            className="w-72 md:w-96 h-72 md:h-130 object-cover rounded-full opacity-800 border-3"
+            className="w-72 md:w-96 h-72 md:h-130 object-cover rounded-full opacity-800 border-2"
           />
         </div>
       </div>

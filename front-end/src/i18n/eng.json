@@ -1,0 +1,73 @@
+{
+  "home": {
+    "title": "Are your children’s academic and emotional growth falling behind?",
+    "description": "Welcome to the 2018 Academic Year! We’re proud to introduce",
+    "continuation": "— a solution developed by experienced educators and top-performing students."
+  },
+
+  "value": {
+    "title": "For your Children’s Growth",
+    "point1": "Expands their knowledge foundation",
+    "point2": "Enhances their understanding level",
+    "point3": "Improves their life experience and confidence",
+    "point4": "We have gathered dedicated teachers who teach with passion and structure — a new year, a new way of learning!"
+  },
+
+  "service": {
+    "title": "Our Services",
+    "subtitle": "We offer a variety of tutoring and educational programs designed for every learner.",
+    "generalTutor": {
+      "title": "General Tutor",
+      "desc": "Comprehensive study support from kindergarten to university level."
+    },
+    "gatUat": {
+      "title": "GAT and UAT",
+      "desc": "Preparation programs for GAT and UAT exams."
+    },
+    "satDuolingo": {
+      "title": "SAT and Duolingo",
+      "desc": "Professional preparation classes for SAT and Duolingo tests."
+    },
+    "vipTutor": {
+      "title": "VIP Tutor",
+      "desc": "Exclusive tutoring and VIP education services."
+    },
+    "visa": {
+      "title": "VISA",
+      "desc": "We assist in organizing and securing international study opportunities."
+    }
+  },
+  "goRegister": {
+    "title": "Join Us Today!",
+    "description": "Register now to access exclusive features and start your journey with us.",
+    "button": "Register"
+  },
+  "special_service": {
+    "heading": "Special Services",
+    "title": "6th Ministry Exam",
+    "description": "Dual study support from kindergarten to university."
+  },
+  "register": {
+    "option1": {
+      "title": "Option 1",
+      "description": "Call to Register"
+    },
+    "option2": {
+      "title": "Option 2: Fill the Form"
+    },
+    "form": {
+      "title": "Register Online",
+      "description": "Fill out the form below and we’ll get back to you.",
+      "name": "Name",
+      "phone": "Phone",
+      "additional": "Additional Info",
+      "namePlaceholder": "Enter your name",
+      "phonePlaceholder": "Enter your phone number",
+      "additionalPlaceholder": "Any extra information",
+      "button": "Register"
+    }
+  },
+  "footer": {
+    "title": "33 International Home & Online Tutoring Agency"
+  }
+}

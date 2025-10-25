@@ -1,16 +1,18 @@
 import React from "react";
 import Button from "../components/Button";
+import { useTranslation } from "react-i18next";
 
 const GoRegister = () => {
+  const { t } = useTranslation();
+
   return (
-    <section className="bg-[#f3ebd5] py-8 px-6 flex flex-col md:flex-row items-center justify-center gap-6">
-      <div className=" text-gray-800 text-center md:text-left">
-        <h1 className="text-2xl font-bold mb-2">Join Us Today!</h1>
-        <p className=" mb-3">
-          Register now to access exclusive features and start your journey with
-          us.
+    <section className="bg-gradient-to-r from-[#f3ebd5] to-[#f9f5e7] py-10 px-6 flex flex-col md:flex-row items-center justify-center gap-8 rounded-2xl shadow-md">
+      <div className="text-gray-800 text-center md:text-left max-w-md">
+        <h1 className="text-3xl font-bold mb-3">{t("goRegister.title")}</h1>
+        <p className="text-lg mb-4 leading-relaxed">
+          {t("goRegister.description")}
         </p>
-        <Button name="Register" />
+        <Button name={t("goRegister.button")} />
       </div>
     </section>
   );

@@ -3,16 +3,19 @@ import React from "react";
 interface NavPointsProps {
   name: string;
   id?: string;
+  dark?: boolean;
 }
 
-const NavPoints = ({ name, id }: NavPointsProps) => {
+const NavPoints = ({ name, id, dark }: NavPointsProps) => {
   return (
     <button
       onClick={() =>
         id &&
         document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })
       }
-      className="text-white hover:text-blue-400 transition-colors duration-300"
+      className={`${
+        dark ? "text-black" : "text-white"
+      }hover:text-blue-400 transition-colors duration-300`}
     >
       {name}
     </button>
