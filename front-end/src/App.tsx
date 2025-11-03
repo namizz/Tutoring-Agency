@@ -1,26 +1,14 @@
-import Footer from "./container/Footer";
-import GoRegister from "./container/GoRegister";
-import Home from "./container/Home";
-import NavBar from "./container/NavBar";
-import Register from "./container/Register";
-import Service from "./container/Service";
-import SpecialService from "./container/SpecialService";
-import Value from "./container/Value";
+import { Route, Routes } from "react-router-dom";
+
+import HomePage from "./pages/Home";
+import TutorRegisterPage from "./pages/Tutor";
 
 function App() {
   return (
-    <div>
-      <NavBar />
-      <div className=" mx-auto ">
-        <Home />
-        <Value />
-        <Service />
-        <GoRegister />
-        <SpecialService />
-        <Register />
-        <Footer />
-      </div>
-    </div>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/tutor" element={<TutorRegisterPage />} />
+    </Routes>
   );
 }
 

@@ -12,29 +12,41 @@ const Service = () => {
     {
       title: t("service.generalTutor.title"),
       description: t("service.generalTutor.desc"),
-      icon: <FaSchoolLock className="text-4xl text-yellow-500" />,
+      icon: (
+        <FaSchoolLock className="text-4xl text-yellow-500 p-1.5" size={62} />
+      ),
     },
     {
       title: t("service.gatUat.title"),
       description: t("service.gatUat.desc"),
-      icon: <SiTestin className="text-4xl text-blue-500" />,
+      icon: (
+        <SiTestin
+          className="text-4xl text-blue-500 border p-1.5 rounded-full"
+          size={62}
+        />
+      ),
     },
     {
       title: t("service.satDuolingo.title"),
       description: t("service.satDuolingo.desc"),
       icon: (
-        <SiDuolingo className="text-4xl text-green-500 bg-yellow-100 rounded-xl" />
+        <SiDuolingo
+          className="text-4xl text-green-500 bg-yellow-100 rounded-xl"
+          size={50}
+        />
       ),
     },
     {
       title: t("service.vipTutor.title"),
       description: t("service.vipTutor.desc"),
-      icon: <RiVipFill className="text-4xl text-purple-500" />,
+      icon: <RiVipFill className="text-4xl text-purple-500 p-1.5" size={62} />,
     },
     {
       title: t("service.visa.title"),
       description: t("service.visa.desc"),
-      icon: <FaPlane className="text-4xl text-red-500 font-bold" />,
+      icon: (
+        <FaPlane className="text-4xl text-red-500 font-bold p-1.5" size={62} />
+      ),
     },
   ];
 
