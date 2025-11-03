@@ -1,5 +1,3 @@
-import React from "react";
-
 interface NavPointsProps {
   name: string;
   id?: string;

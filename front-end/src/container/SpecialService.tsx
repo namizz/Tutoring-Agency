@@ -1,4 +1,3 @@
-import React from "react";
 import ServiceComponent from "../components/ServiceComponent";
 import { FaSchoolLock } from "react-icons/fa6";
 import { useTranslation } from "react-i18next";

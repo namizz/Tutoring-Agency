@@ -8,11 +8,13 @@ import (
 	"mime/multipart"
 	"net/http"
 )
+
+// SendMessage sends a plain text message
 func SendMessage(token, chatId, message string) error {
-	url := fmt.Sprintf("https://api.telegram.org/bot%s/sendMessage",token);
+	url := fmt.Sprintf("https://api.telegram.org/bot%s/sendMessage", token)
 
 	fmt.Println("Sending message:", message)
-	
+
 	body := map[string]string{
 		"chat_id": chatId,
 		"text":    message,
@@ -32,17 +34,22 @@ func SendMessage(token, chatId, message string) error {
 	}
 	defer resp.Body.Close()
 
-	fmt.Println("Message sent");
+	fmt.Println("Message sent")
 	return nil
 }
 
-func SendPhoto(token, chatId string,file multipart.File, fileName string ) error{
-	url := fmt.Sprintf("https://api.telegram.org/bot%s/sendPhoto",token);
+// SendPhoto sends a photo with optional caption
+func SendPhoto(token, chatId string, file multipart.File, fileName, caption string) error {
+	url := fmt.Sprintf("https://api.telegram.org/bot%s/sendPhoto", token)
 
 	body := &bytes.Buffer{}
 	writer := multipart.NewWriter(body)
 
 	_ = writer.WriteField("chat_id", chatId)
+	if caption != "" {
+		_ = writer.WriteField("caption", caption)
+	}
+
 	part, err := writer.CreateFormFile("photo", fileName)
 	if err != nil {
 		return fmt.Errorf("error creating form file: %v", err)
@@ -58,6 +65,7 @@ func SendPhoto(token, chatId string,file multipart.File, fileName string ) error
 		return fmt.Errorf("error creating request: %v", err)
 	}
 	req.Header.Set("Content-Type", writer.FormDataContentType())
+
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
@@ -65,17 +73,22 @@ func SendPhoto(token, chatId string,file multipart.File, fileName string ) error
 	}
 	defer resp.Body.Close()
 
-	fmt.Println("Photo sent");
+	fmt.Println("Photo with caption sent")
 	return nil
-
 }
 
-func SendPDF(token, chatId string,file multipart.File, fileName string ) error{
-	url := fmt.Sprintf("https://api.telegram.org/bot%s/sendDocument",token);
+// SendPDF sends a PDF (document) with optional caption
+func SendPDF(token, chatId string, file multipart.File, fileName, caption string) error {
+	url := fmt.Sprintf("https://api.telegram.org/bot%s/sendDocument", token)
 
 	body := &bytes.Buffer{}
 	writer := multipart.NewWriter(body)
+
 	_ = writer.WriteField("chat_id", chatId)
+	if caption != "" {
+		_ = writer.WriteField("caption", caption)
+	}
+
 	part, err := writer.CreateFormFile("document", fileName)
 	if err != nil {
 		return fmt.Errorf("error creating form file: %v", err)
@@ -91,13 +104,14 @@ func SendPDF(token, chatId string,file multipart.File, fileName string ) error{
 		return fmt.Errorf("error creating request: %v", err)
 	}
 	req.Header.Set("Content-Type", writer.FormDataContentType())
+
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
 		return fmt.Errorf("error sending request: %v", err)
 	}
 	defer resp.Body.Close()
-	fmt.Println("PDF sent");
+
+	fmt.Println("PDF with caption sent")
 	return nil
 }
-

@@ -1,7 +1,4 @@
-// app/register/page.tsx
-"use client";
-
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -11,27 +8,33 @@ import FileDropZone from "../components/FileUpload";
 import ReviewStep from "../container/Review";
 
 const schema = z.object({
-  fullName: z.string().min(1),
-  address: z.string().min(1),
-  university: z.string().min(1),
+  fullName: z.string().min(1, { message: "Full Name is required" }),
+  address: z.string().min(1, { message: "Address is required" }),
+  university: z.string().min(1, { message: "University is required" }),
   department: z.string().optional(),
-  nationalId: z.instanceof(File),
-  fanNumber: z.string().min(1),
-  phone: z.string().min(1),
-  telegram: z.string().min(1),
-  highSchool: z.instanceof(File),
+  nationalId: z
+    .instanceof(File, { message: "National ID is required" })
+    .nullable(),
+  fanNumber: z.string().min(1, { message: "FAN Number is required" }),
+  phone: z.string().min(1, { message: "Phone number is required" }),
+  telegram: z.string().min(1, { message: "Telegram username is required" }),
+  highSchool: z
+    .instanceof(File, { message: "High School Records are required" })
+    .nullable(),
   examResults: z.instanceof(File).optional(),
   universityResults: z.instanceof(File).optional(),
   languageSkills: z.instanceof(File).optional(),
   subjectSpeciality: z.string().optional(),
-  yearsExperience: z.string().min(1),
+  yearsExperience: z
+    .string()
+    .min(0, { message: "Years of experience is required" }),
   experienceDetail: z.enum([
     "High School Student",
     "Elementary Student",
     "Both",
   ]),
-  tutorArea: z.string().min(1),
-  daysTimes: z.string().min(1),
+  tutorArea: z.string().min(1, { message: "Tutor area is required" }),
+  daysTimes: z.string().min(1, { message: "Availability is required" }),
   certificates: z.instanceof(File).optional(),
 });
 
@@ -39,6 +42,7 @@ type FormData = z.infer<typeof schema>;
 
 export default function RegisterForm() {
   const [step, setStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const totalSteps = 4;
 
   const {
@@ -64,10 +68,84 @@ export default function RegisterForm() {
 
   const formData = watch();
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log("Final Submit:", data);
-    console.log(step);
-    alert("Application submitted successfully!"); // Only here
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    setIsSubmitting(true);
+    try {
+      const missingFiles: string[] = [];
+
+      const fileLabels = [
+        { key: "nationalId", label: "National ID Picture" },
+        { key: "highSchool", label: "High School Records" },
+        { key: "examResults", label: "Entrance Examination Results" },
+        { key: "universityResults", label: "University Grade Report" },
+        { key: "languageSkills", label: "Language Proficiency" },
+        {
+          key: "certificates",
+          label: "Certificates & Additional Documentation",
+        },
+      ];
+
+      fileLabels.forEach(({ key, label }) => {
+        if (!data[key as keyof FormData]) {
+          missingFiles.push(label);
+        }
+      });
+
+      const missingNote =
+        missingFiles.length > 0
+          ? `\n\nMissing Files: ${missingFiles.join(", ")}`
+          : "";
+
+      const message = `
+        New Tutor Application
+
+        Full Name: ${data.fullName}
+        Address: ${data.address}
+        University: ${data.university}
+        Department: ${data.department || "—"}
+        FAN Number: ${data.fanNumber}
+        Phone: ${data.phone}
+        Telegram: @${data.telegram}
+        Experience: ${data.yearsExperience} years
+        Teaching Role: ${data.experienceDetail}
+        Subject: ${data.subjectSpeciality || "—"}
+        Tutor Areas: ${data.tutorArea}
+        Availability: ${data.daysTimes}${missingNote}
+            `.trim();
+
+      // === 2. Send text message ===
+      await fetch("http://localhost:8080/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message }),
+      });
+
+      // === 3. Send all files (images & PDFs) to /pdf ===
+      const filesToSend = fileLabels
+        .filter(({ key }) => data[key as keyof FormData])
+        .map(({ key, label }) => ({
+          file: data[key as keyof FormData] as File,
+          caption: `${data.fullName}'s ${label}`,
+        }));
+
+      for (const { file, caption } of filesToSend) {
+        const form = new FormData();
+        form.append("pdf", file);
+        form.append("caption", caption);
+
+        await fetch("http://localhost:8080/pdf", {
+          method: "POST",
+          body: form,
+        });
+      }
+
+      alert("Application submitted to Telegram!");
+    } catch (err) {
+      console.error(err);
+      alert("Submission failed. Check console.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const nextStep = async () => {
@@ -90,7 +168,26 @@ export default function RegisterForm() {
 
     if (step < 4) {
       const valid = await trigger(fields as any[]);
-      if (valid) setStep((s) => s + 1);
+      if (valid) {
+        // Background ping to wake Render (non-blocking)
+        Promise.resolve().then(async () => {
+          try {
+            await fetch(`http://localhost:8080/ping`, {
+              method: "GET",
+              cache: "no-cache",
+            });
+            console.log("Server pinged (woken up)");
+          } catch (err) {
+            console.warn(
+              "Ping failed (server may be cold, but will warm on submit)",
+              err
+            );
+          }
+        });
+
+        // Proceed to next step
+        setStep((s) => s + 1);
+      }
     }
   };
 
@@ -152,7 +249,7 @@ export default function RegisterForm() {
                   label="National ID Picture"
                   id="nationalId"
                   onFileSelect={(f) =>
-                    setValue("nationalId", f || undefined, {
+                    setValue("nationalId", f, {
                       shouldValidate: true,
                     })
                   }
@@ -190,7 +287,7 @@ export default function RegisterForm() {
                   label="High School Records"
                   id="highSchool"
                   onFileSelect={(f) =>
-                    setValue("highSchool", f || undefined, {
+                    setValue("highSchool", f, {
                       shouldValidate: true,
                     })
                   }
@@ -272,7 +369,10 @@ export default function RegisterForm() {
 
           {/* STEP 4: REVIEW */}
           {step === 4 && (
-            <ReviewStep data={formData} watchedFiles={watchedFiles} />
+            <ReviewStep
+              data={formData}
+              watchedFiles={watchedFiles.map((f) => f ?? undefined)}
+            />
           )}
         </div>
 
@@ -299,9 +399,10 @@ export default function RegisterForm() {
             ) : (
               <button
                 type="submit"
-                className="px-6 py-3 bg-green-600 text-white rounded-md font-medium hover:bg-green-700 transition"
+                disabled={isSubmitting}
+                className="px-6 py-3 bg-green-600 text-white rounded-md font-medium hover:bg-green-700 transition disabled:opacity-50"
               >
-                Submit Application
+                {isSubmitting ? "Submitting..." : "Submit Application"}
               </button>
             )}
           </div>

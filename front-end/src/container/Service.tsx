@@ -1,7 +1,6 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import ServiceComponent from "../components/ServiceComponent";
-import { FaSchoolLock, FaLaptopCode, FaPlane } from "react-icons/fa6";
+import { FaSchoolLock, FaPlane } from "react-icons/fa6";
 import { SiDuolingo, SiTestin } from "react-icons/si";
 import { RiVipFill } from "react-icons/ri";
 

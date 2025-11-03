@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import List from "../components/List";
 import { LuBrain } from "react-icons/lu";
