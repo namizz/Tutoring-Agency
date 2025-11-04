@@ -1,4 +1,4 @@
-import { useState, useEffect, useTransition } from "react";
+import { useState, useEffect } from "react";
 import NavPoints from "../components/NavPoints";
 import Button from "../components/Button";
 import { FiMenu, FiX } from "react-icons/fi";
