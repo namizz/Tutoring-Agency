@@ -7,6 +7,8 @@ import ComboBox from "../components/ComboBox";
 import FileDropZone from "../components/FileUpload";
 import ReviewStep from "../container/Review";
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND;
+console.log("Backend URL:", BACKEND_URL);
 const schema = z.object({
   fullName: z.string().min(1, { message: "Full Name is required" }),
   address: z.string().min(1, { message: "Address is required" }),
@@ -114,7 +116,7 @@ export default function RegisterForm() {
             `.trim();
 
       // === 2. Send text message ===
-      await fetch("http://localhost:8080/send", {
+      await fetch(`${BACKEND_URL}/send`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message }),
@@ -133,7 +135,7 @@ export default function RegisterForm() {
         form.append("pdf", file);
         form.append("caption", caption);
 
-        await fetch("http://localhost:8080/pdf", {
+        await fetch(`${BACKEND_URL}/pdf`, {
           method: "POST",
           body: form,
         });
@@ -172,7 +174,7 @@ export default function RegisterForm() {
         // Background ping to wake Render (non-blocking)
         Promise.resolve().then(async () => {
           try {
-            await fetch(`http://localhost:8080/ping`, {
+            await fetch(`${BACKEND_URL}/ping`, {
               method: "GET",
               cache: "no-cache",
             });

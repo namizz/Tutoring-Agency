@@ -1,2 +1,4 @@
 /back-end/.env
 /back-end/.env.local
+/front-end/.env
+/front-end/.envlocal

@@ -14,8 +14,16 @@ import (
 
 // CORS middleware
 func enableCORS(next http.Handler) http.Handler {
+	allowOrigins := []string{"http://localhost:5173", "https://tutoring-agency.vercel.app"}
+
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173")
+		origin:= r.Header.Get("Origin")
+		for _, o := range allowOrigins {
+			if o == origin {
+				w.Header().Set("Access-Control-Allow-Origin", origin)
+				break
+			}
+		}
 		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 
