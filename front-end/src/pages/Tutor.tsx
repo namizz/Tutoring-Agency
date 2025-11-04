@@ -8,7 +8,6 @@ import FileDropZone from "../components/FileUpload";
 import ReviewStep from "../container/Review";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND;
-console.log("Backend URL:", BACKEND_URL);
 const schema = z.object({
   fullName: z.string().min(1, { message: "Full Name is required" }),
   address: z.string().min(1, { message: "Address is required" }),

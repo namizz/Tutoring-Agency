@@ -74,7 +74,7 @@ const Register = () => {
 
   return (
     <>
-      <section className="bg-white">
+      <section className="bg-white" id="register">
         <div className="py-12 px-6 flex flex-col gap-10 max-w-4xl mx-auto">
           {/* Option 1 */}
           <div className="flex flex-col md:flex-row items-center gap-4 bg-white border border-gray-200 p-6 rounded-2xl shadow-xs">

@@ -69,5 +69,12 @@
   },
   "footer": {
     "title": "33 International Home & Online Tutoring Agency"
+  },
+  "nav": {
+    "home": "Home",
+    "aboutus": "About Us",
+    "services": "Services",
+    "contact": "Contact",
+    "register": "Register"
   }
 }

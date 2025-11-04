@@ -50,7 +50,7 @@ const Service = () => {
   ];
 
   return (
-    <section className="py-20 px-8 bg-gray-50">
+    <section className="py-20 px-8 bg-gray-50" id="services">
       <div className="max-w-7xl mx-auto text-center">
         <h1 className="text-4xl font-bold text-[#1F2D3A] mb-10">
           {t("service.title")}

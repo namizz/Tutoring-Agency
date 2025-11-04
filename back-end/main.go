@@ -133,6 +133,6 @@ func main() {
 		fmt.Fprintf(w, "PDF with caption sent successfully")
 	})
 
-	fmt.Println("Server running at http://localhost:8080")
+	// fmt.Println("Server running at http://localhost:8080")
 	http.ListenAndServe(":8080", enableCORS(mux))
 }

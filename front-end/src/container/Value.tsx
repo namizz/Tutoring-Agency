@@ -9,7 +9,7 @@ const Value = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="bg-white text-[#1F2D3A] py-20">
+    <section className="bg-white text-[#1F2D3A] py-20" id="aboutus">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12 px-8 md:px-20">
         {/* Left Text Section */}
         <div className="space-y-6 md:max-w-lg ">

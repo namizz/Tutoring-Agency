@@ -11,7 +11,7 @@ const GoRegister = () => {
         <p className="text-lg mb-4 leading-relaxed">
           {t("goRegister.description")}
         </p>
-        <Button name={t("goRegister.button")} />
+        <Button name={t("goRegister.button")} navigate="register" />
       </div>
     </section>
   );
