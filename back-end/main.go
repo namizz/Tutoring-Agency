@@ -29,11 +29,12 @@ func enableCORS(next http.Handler) http.Handler {
 }
 
 func main() {
-	err := godotenv.Load(".env.local")
-	if err != nil {
-		fmt.Println("Error loading .env file")
-		return
-	}
+	// for local production level only
+	// err := godotenv.Load(".env.local")
+	// if err != nil {
+	// 	fmt.Println("Error loading .env file")
+	// 	return
+	// }
 
 	token := os.Getenv("TOKEN")
 	chatId := os.Getenv("CHAT_ID")
