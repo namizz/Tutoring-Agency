@@ -15,7 +15,7 @@
 
   "service": {
     "title": "Our Services",
-    "subtitle": "We offer a variety of tutoring and educational programs designed for every learner.",
+    "subtitle": "Develop efficient lesson plans and assessments, and track their progress and outcomes.",
     "generalTutor": {
       "title": "General Tutor",
       "desc": "Comprehensive study support from kindergarten to university level."
@@ -64,7 +64,9 @@
       "namePlaceholder": "Enter your name",
       "phonePlaceholder": "Enter your phone number",
       "additionalPlaceholder": "Any extra information",
-      "button": "Register"
+      "button": "Register",
+      "submitting": "Submitting...",
+      "successTitle": "Registration Successful"
     }
   },
   "footer": {

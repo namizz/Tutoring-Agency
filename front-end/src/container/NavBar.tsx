@@ -44,7 +44,14 @@ const NavBar = () => {
     >
       <div className="max-w-7xl mx-auto sm:px-6 px-4 py-2 sm:py-4 flex justify-between items-center font-semibold">
         {/* Left - Logo and Title */}
-        <div className="flex items-center gap-3">
+        <div
+          className="flex items-center gap-3"
+          onClick={() =>
+            document
+              .getElementById("home")
+              ?.scrollIntoView({ behavior: "smooth" })
+          }
+        >
           <img
             src="/33 logo.jpg"
             alt="Logo"

@@ -87,7 +87,9 @@ const Register = () => {
               </h3>
               <h2 className="text-lg font-semibold text-gray-800">
                 {t("register.option1.description")}{" "}
-                <span className="font-mono text-green-600">092279127</span>
+                <a href="tel:0939841549" className="font-mono text-green-600">
+                  0939841549
+                </a>
               </h2>
             </div>
           </div>

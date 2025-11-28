@@ -22,7 +22,9 @@ const schema = z.object({
   highSchool: z
     .instanceof(File, { message: "High School Records are required" })
     .nullable(),
-  examResults: z.instanceof(File).optional(),
+  examResults: z
+    .instanceof(File, { message: "Entrance Exam is required" })
+    .nullable(),
   universityResults: z.instanceof(File).optional(),
   languageSkills: z.instanceof(File).optional(),
   subjectSpeciality: z.string().optional(),
@@ -162,12 +164,12 @@ export default function RegisterForm() {
             "telegram",
           ]
         : step === 2
-        ? ["highSchool", "yearsExperience", "experienceDetail"]
+        ? ["highSchool", "examResults", "yearsExperience", "experienceDetail"]
         : step === 3
         ? ["tutorArea", "daysTimes"]
         : [];
 
-    if (step < 4) {
+    if (step === 2) {
       const valid = await trigger(fields as any[]);
       if (valid) {
         // Background ping to wake Render (non-blocking)
@@ -177,7 +179,6 @@ export default function RegisterForm() {
               method: "GET",
               cache: "no-cache",
             });
-            console.log("Server pinged (woken up)");
           } catch (err) {
             console.warn(
               "Ping failed (server may be cold, but will warm on submit)",
@@ -185,8 +186,6 @@ export default function RegisterForm() {
             );
           }
         });
-
-        // Proceed to next step
         setStep((s) => s + 1);
       }
     }
@@ -301,8 +300,14 @@ export default function RegisterForm() {
                 <FileDropZone
                   label="Entrance Examination Results"
                   id="examResults"
-                  onFileSelect={(f) => setValue("examResults", f || undefined)}
+                  onFileSelect={(f) =>
+                    setValue("examResults", f, {
+                      shouldValidate: true,
+                    })
+                  }
                   defaultFile={watchedFiles[2]}
+                  error={errors.examResults?.message}
+                  required
                 />
               </div>
               <div className="md:col-span-2">
@@ -392,7 +397,10 @@ export default function RegisterForm() {
             {step < totalSteps ? (
               <button
                 type="button"
-                onClick={nextStep}
+                onClick={async (e) => {
+                  e.preventDefault();
+                  await nextStep();
+                }}
                 className="px-6 py-3 bg-red-600 text-white rounded-md font-medium hover:bg-red-700 transition"
               >
                 {step === 3 ? "Review" : "Next"}

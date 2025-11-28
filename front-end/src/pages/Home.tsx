@@ -4,7 +4,7 @@ import Home from "../container/Home";
 import NavBar from "../container/NavBar";
 import Register from "../container/Register";
 import Service from "../container/Service";
-import SpecialService from "../container/SpecialService";
+// import SpecialService from "../container/SpecialService";
 import Value from "../container/Value";
 
 function HomePage() {
@@ -16,7 +16,7 @@ function HomePage() {
         <Value />
         <Service />
         <GoRegister />
-        <SpecialService />
+        {/* <SpecialService /> */}
         <Register />
         <Footer />
       </div>

@@ -47,7 +47,14 @@ const Footer = () => {
       </div>
 
       <hr className="max-w-3xl mx-auto text-gray-500" />
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-6">
+      <div
+        className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-6"
+        onClick={() =>
+          document
+            .getElementById("home")
+            ?.scrollIntoView({ behavior: "smooth" })
+        }
+      >
         <img
           src="/33 logo.jpg"
           alt="Logo"
