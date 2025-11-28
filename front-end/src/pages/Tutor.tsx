@@ -55,6 +55,7 @@ export default function RegisterForm() {
     setValue,
     watch,
     trigger,
+    reset,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     mode: "onChange",
@@ -143,6 +144,8 @@ export default function RegisterForm() {
       }
 
       alert("Application submitted to Telegram!");
+      reset();
+      setStep(1);
     } catch (err) {
       console.error(err);
       alert("Submission failed. Check console.");
@@ -152,7 +155,7 @@ export default function RegisterForm() {
   };
 
   const nextStep = async () => {
-    const fields =
+    const fieldsToValidate =
       step === 1
         ? [
             "fullName",
@@ -164,30 +167,26 @@ export default function RegisterForm() {
             "telegram",
           ]
         : step === 2
-        ? ["highSchool", "examResults", "yearsExperience", "experienceDetail"]
+        ? ["highSchool", "examResults", "yearsExperience", "experienceDetail"] // Fixed typo!
         : step === 3
         ? ["tutorArea", "daysTimes"]
         : [];
 
-    if (step === 2) {
-      const valid = await trigger(fields as any[]);
-      if (valid) {
-        // Background ping to wake Render (non-blocking)
-        Promise.resolve().then(async () => {
-          try {
-            await fetch(`${BACKEND_URL}/ping`, {
-              method: "GET",
-              cache: "no-cache",
-            });
-          } catch (err) {
-            console.warn(
-              "Ping failed (server may be cold, but will warm on submit)",
-              err
-            );
-          }
+    const isValid = await trigger(fieldsToValidate as (keyof FormData)[]);
+
+    if (isValid) {
+      if (step === 2) {
+        fetch(`${BACKEND_URL}/ping`, {
+          method: "GET",
+          cache: "no-cache",
+        }).catch((err) => {
+          console.warn(
+            "Ping failed (server may be cold, but will warm on submit)",
+            err
+          );
         });
-        setStep((s) => s + 1);
       }
+      setStep((prev) => prev + 1);
     }
   };
 
